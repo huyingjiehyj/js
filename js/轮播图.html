@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8" />
+    <title></title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+        
+        body {
+            padding: 50px;
+        }
+        
+        li {
+            list-style: none;
+        }
+        
+        div {
+            position: relative;
+            width: 400px;
+            height: 320px;
+            overflow: hidden;
+        }
+        
+        ul.image {
+            position: relative;
+        }
+        
+        ul.image li {
+            position: absolute;
+            left: 0;
+            opacity: 0;
+        }
+        
+        ul.image li.opa {
+            opacity: 1;
+        }
+        
+        .pre,
+        .next {
+            position: absolute;
+            top: 45%;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            font-size: 40px;
+            color: red;
+            cursor: pointer;
+        }
+        
+        img {
+            width: 400px;
+            height: 320;
+        }
+        
+        .next {
+            right: 0;
+        }
+        
+        .bth-list {
+            position: relative;
+            width: 152px;
+            height: px;
+            left: 20px;
+            bottom: 20px;
+        }
+        
+        .bth {
+            opacity: 0.8;
+            width: 6px;
+            height: 6px;
+            float: left;
+            border: 2px solid #F0EDED;
+            border-radius: 5px;
+            margin-right: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <ul id="image" class="image">
+            <li><img src="img/1.jpg" alt="" /></li>
+            <li><img src="img/2.jpg" alt="" /></li>
+            <li><img src="img/3.jpg" alt="" /></li>
+            <li><img src="img/4.jpg" alt="" /></li>
+            <li><img src="img/5.jpg" alt="" /></li>
+            <li><img src="img/6.jpg" alt="" /></li>
+        </ul>
+        <div id="pre" class="pre">
+            <</div>
+                <div id="next" class="next">></div>
+        </div>
+        <div class="bth-list">
+            <div class="bth active"></div>
+            <div class="bth"></div>
+            <div class="bth"></div>
+            <div class="bth"></div>
+            <div class="bth"></div>
+            <div class="bth"></div>
+        </div>
+</body>
+<script src="js/jquery.js"></script>
+<script>
+    //初始化
+    var index = 0;
+    var t;
+    var length = $('ul li').length;
+
+    $('#image li').eq(index).addClass('opa');
+    $('.bth-list div').eq(index).addClass('one');
+
+    //自动切换图片
+    setInterval(autoMove, 3000);
+
+    function autoMove() {
+        index++;
+        if (index >= length) index = 0;
+        changeTo(index);
+    }
+
+    function changeTo(index) {
+        $('#image li').eq(index).addClass('opa').siblings().removeClass('opa');
+        $('.bth-list li').eq(index).addClass('one').siblings().removeClass('one');
+    }
+    $('#pre').mouseover(function() {
+        $('#pre').css('opacity', 0.9);
+    }).mouseout(function() {
+        $('#pre').css('opacity', 0.3);
+    });
+    $('#next').mouseover(function() {
+        $('#next').css('opacity', 0.9);
+    }).mouseout(function() {
+        $('#next').css('opacity', 0.3);
+    });
+    $('#pre').click(function() {
+        index--;
+        if (index < 0) index = length - 1;
+        changeTo(index);
+    });
+    $('#next').click(function() {
+        index++;
+        if (index >= length) index = 0;
+        changeTo(index);
+    });
+    $('.bth-list').mouseover(function() {
+        index = $(this).index();
+        changeTo(index);
+    });
+</script>
+
+</html>
